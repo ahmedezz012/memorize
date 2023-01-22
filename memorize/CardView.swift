@@ -7,19 +7,18 @@
 
 import SwiftUI
 
-struct CardView: View
-{
-    @State var cardIcon : String
+struct CardView: View {
+    
+    var cardIcon : String
+    
     @State var isFaceUp : Bool = !false
-    var body: some View
-    {
-        if !isFaceUp
-        {
+    
+    var body: some View {
+        if !isFaceUp {
             FaceDownCardView().onTapGesture {
                 isFaceUp = true
             }
-        } else
-        {
+        } else {
             FaceUpCardView(cardIcon: cardIcon).onTapGesture {
                 isFaceUp = false
             }

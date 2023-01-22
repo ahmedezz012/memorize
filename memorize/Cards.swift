@@ -8,23 +8,21 @@
 import SwiftUI
 
 var roundedRect = RoundedRectangle(cornerRadius: 25.0)
-struct FaceDownCardView : View
-{
-    var body : some View
-    {
-        ZStack
-        {
+
+struct FaceDownCardView : View {
+    var body : some View {
+        ZStack {
             roundedRect.fill().foregroundColor(Color.cyan)
         }
     }
 }
-struct FaceUpCardView : View
-{
+
+struct FaceUpCardView : View {
+    
     @State var cardIcon : String
-    var body : some View
-    {
-        ZStack
-        {
+    
+    var body : some View {
+        ZStack {
             roundedRect.fill().foregroundColor(Color.blue)
             roundedRect.strokeBorder(lineWidth: 3.0).foregroundColor(Color.red)
             Text(cardIcon).font(.largeTitle)

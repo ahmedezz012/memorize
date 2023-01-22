@@ -9,90 +9,122 @@ import SwiftUI
 
 struct AssignmentView: View {
     
-    var vechichlesEmoji : [String] = ["🛵","🏍️","🛺",
-                                      "🚔","🚍","🚘",
-                                      "🛩️","✈️","🚁"]
-    var animalsEmoji : [String] = ["🐘","🦓","🦏",
-                                   "🦧","🐊","🐏","🦬","🦍","🐅"]
-    var birdsEmoji : [String] = ["🦆","🦅","🦉",
-                                 "🐓","🦃","🦚","🦤","🦩","🦢"]
-    @State var selectedSetOfEmoji :Array<String> = ["🦆","🦅","🦉",
-                                                    "🐓","🦃","🦚","🦤","🦩","🦢"]
+    let minimum: CGFloat = 85.0
+    
+    let aspectRatio: CGFloat = 2/2.5
+    
+    let vehicleTab = 3
+    
+    let animalsTab = 2
+    
+    let birdsTab = 1
+    
+    let appTitle = "Memorize!"
+    
+    var vechichlesEmoji: [String] = [
+        "🛵","🏍️","🛺",
+        "🚔","🚍","🚘",
+        "🛩️","✈️","🚁"
+    ]
+    
+    var animalsEmoji: [String] = [
+        "🐘","🦓","🦏",
+        "🦧","🐊","🐏",
+        "🦬","🦍","🐅"
+    ]
+    
+    var birdsEmoji: [String] = [
+        "🦆","🦅","🦉",
+        "🐓","🦃","🦚",
+        "🦤","🦩","🦢"
+    ]
+    
+    @State var selectedSetOfEmoji: Array<String> = [
+        "🦆","🦅","🦉",
+        "🐓","🦃","🦚",
+        "🦤","🦩","🦢"
+    ]
     
     @State var currentSelected = 1
+    
     var body: some View {
-        
-       return VStack{
-           Title
-           ListOfEmojis
-           Buttons
-        }.padding(.horizontal,10.0)
+        return VStack {
+            title
+            listOfEmojis
+            buttons
+        }.padding(.horizontal, 10.0)
     }
-    var ListOfEmojis : some View
-    {
+    
+    var listOfEmojis : some View {
         ScrollView {
-            LazyVGrid(columns :[GridItem(.adaptive(minimum: 85.0))]){
-                ForEach(selectedSetOfEmoji[0..<9], id: \.self)
-                {
-                    it in CardView(cardIcon:it).aspectRatio(2/2.5, contentMode: .fit)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: minimum))]) {
+                ForEach(selectedSetOfEmoji, id: \.self) { emoji in
+                     CardView(cardIcon: emoji).aspectRatio(aspectRatio, contentMode: .fit)
                 }
-            }}    }
-    var Buttons : some View
-    {
+            }
+        }
+    }
+    
+    var buttons : some View {
         HStack {
-            BirdsButton
+            birdsButton
             Spacer()
-            AnimalsButton
+            animalsButton
             Spacer()
-            VehiclesButton
-        }    }
-    var Title : some View
-    {
-        Text("Memorize!")
-            .font(.title)    }
-    var BirdsButton : some View
-    {
+            vehiclesButton
+        }
+    }
+    var title : some View {
+        Text(appTitle)
+        .font(.title)
+    }
+    var birdsButton : some View {
         Button {
             selectedSetOfEmoji = birdsEmoji
             selectedSetOfEmoji.shuffle()
-            currentSelected = 1
+            currentSelected = birdsTab
         } label: {
-            ButtonText(imageId: "bird", text: "birds",isSelected: currentSelected == 1)
+            ButtonText(imageId: "bird",
+                       text: "birds",
+                       isSelected: currentSelected == birdsTab)
         }
     }
-    var AnimalsButton : some View
-    {
+    
+    var animalsButton : some View {
         Button {
             selectedSetOfEmoji = animalsEmoji
             selectedSetOfEmoji.shuffle()
-            currentSelected = 2
+            currentSelected = animalsTab
         } label: {
-            ButtonText(imageId: "teddybear", text: "animals",isSelected: currentSelected == 2)
+            ButtonText(imageId: "teddybear",
+                       text: "animals",
+                       isSelected: currentSelected == animalsTab)
         }
     }
-    var VehiclesButton : some View
-    {
+    var vehiclesButton : some View {
         Button {
             selectedSetOfEmoji = vechichlesEmoji
             selectedSetOfEmoji.shuffle()
-            currentSelected = 3
+            currentSelected = vehicleTab
         } label: {
-            ButtonText(imageId: "car", text: "vehicles",isSelected: currentSelected == 3)
+           ButtonText(imageId: "car",
+                      text: "vehicles",
+                      isSelected: currentSelected == vehicleTab)
         }
     }}
 
 struct AssignmentView_Previews: PreviewProvider {
     static var previews: some View {
         AssignmentView()
-                    .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-                    .previewDisplayName("iPhone 14")
-
-        AssignmentView()
-                    .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
-                    .previewDisplayName("iPhone 14 Pro Max")
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+            .previewDisplayName("iPhone 14")
         
         AssignmentView()
-                    .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
-                    .previewDisplayName("13 mini")
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
+            .previewDisplayName("iPhone 14 Pro Max")
+        
+        AssignmentView()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
+            .previewDisplayName("13 mini")
     }
 }
