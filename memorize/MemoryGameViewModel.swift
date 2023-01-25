@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MemoryGameViewModel {
+class MemoryGameViewModel: ObservableObject {
     
     private static let emojis : [String] = [
         "🐬","🐳","🐋","🦈","🦑",
@@ -22,11 +22,16 @@ class MemoryGameViewModel {
         }
     }
     
-    var memoryGame: MemoryGame = createMemoryGame()
-    
+    @Published var memoryGame: MemoryGame = createMemoryGame()
     
     var cards : Array<MemoryGame<String>.Card> {
         memoryGame.cards
+    }
+    
+    // MARK: Intents
+    
+    func choose(card: MemoryGame<String>.Card) {
+        memoryGame.choose(card)
     }
     
 }

@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis : [String] = ["🐬","🐳","🐋","🦈","🦑",
-         "🦐","🦞","🦀","🐟","🐙",
-         "🦭","🦧","🐊","🦜","🐏",
-         "🐘","🦓","🦏","🦚","🦉"]
+    @ObservedObject var memoryGameViewModel: MemoryGameViewModel
     @State var count = 10
     var body: some View {
         VStack
         {
             ScrollView{
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65.0))]) {
-                    ForEach(emojis[0..<count], id : \.self) { it in CardView(cardText: it).aspectRatio(3/4, contentMode: .fit)
+                    ForEach(memoryGameViewModel.cards) { card in
+                        CardView(card: card).aspectRatio(3/4, contentMode: .fit).onTapGesture {
+                            memoryGameViewModel.choose(card: card)
+                        }
                     }
                 }}
             Spacer()
@@ -28,7 +28,7 @@ struct ContentView: View {
                 AddButton
             }
         }.padding([.top],60.0).padding(.horizontal)
-
+        
     }
     var RemoveButton : some View
     {
@@ -54,24 +54,21 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
+        ContentView(memoryGameViewModel: MemoryGameViewModel()).previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
     }
 }
 
-struct CardView : View
-{
-    var cardText : String
-    @State var isFaceUp : Bool = false
+struct CardView : View {
+    
+    var card: MemoryGame<String>.Card
     var body : some View {
-        if isFaceUp {
-            FaceUpCardView(cardText: cardText).onTapGesture {
-                isFaceUp = false
-            }
+        if card.isFaceUp && !card.isMatch {
+            FaceUpCardView(cardText: card.content)
+        } else if card.isFaceUp && card.isMatch {
+            FaceUpCardView(cardText: card.content).opacity(0.5)
         }
         else {
-            FaceDownCardView().onTapGesture {
-                isFaceUp = true
-            }
+            FaceDownCardView()
         }
     }
 }
