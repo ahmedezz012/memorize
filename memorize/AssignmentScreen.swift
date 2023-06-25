@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AssignmentView: View {
+struct AssignmentScreen: View {
     
     let minimum: CGFloat = 85.0
     
@@ -115,16 +115,16 @@ struct AssignmentView: View {
 
 struct AssignmentView_Previews: PreviewProvider {
     static var previews: some View {
-        AssignmentView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-            .previewDisplayName("iPhone 14")
-        
-        AssignmentView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
-            .previewDisplayName("iPhone 14 Pro Max")
-        
-        AssignmentView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
-            .previewDisplayName("13 mini")
+        AssignmentScreen()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro"))
+            .previewDisplayName("iPhone 14 pro")
+
+//        AssignmentView()
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
+//            .previewDisplayName("iPhone 14 Pro Max")
+//
+//        AssignmentView()
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 13 mini"))
+//            .previewDisplayName("13 mini")
     }
 }
